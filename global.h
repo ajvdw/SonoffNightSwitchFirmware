@@ -22,15 +22,15 @@ byte packetBuffer[ NTP_PACKET_SIZE]; //buffer to hold incoming and outgoing pack
 // A UDP instance to let us send and receive packets over UDP
 WiFiUDP udp;
 
-#define LEDON  1
-#define LEDOFF 0
+#define LEDON  0
+#define LEDOFF 1
 
-const int RED_PIN   = 15; //14
-const int GREEN_PIN = 12; //13
+const int RED_PIN   = 14; 
+const int GREEN_PIN = 13; 
 
 const int LED_PIN   = 2;   
 const int FLASH_PIN = 0;
-const int RELAY_PIN = 13; // 12
+const int RELAY_PIN = 12;
 
 #define VERSION_MAJOR  2
 #define VERSION_MINOR  4

@@ -41,7 +41,7 @@ void setup()
 
   // Orange
   digitalWrite( RED_PIN, LEDON );
-  digitalWrite( GREEN_PIN, LEDON );
+  digitalWrite( GREEN_PIN, LEDOFF );
   
   Serial.println("Starting nightswitch");
 
@@ -63,13 +63,13 @@ void setup()
     config.startmonth=2;
     config.starthour=2;
     config.startminute=0;
-    config.startoffset=12;
+    config.startoffset=14;
     config.endweek=0;
     config.endday=0;
     config.endmonth=9;
     config.endhour=3;
     config.endminute=0;
-    config.endoffset=11; 
+    config.endoffset=13; 
 
     config.lat = (long) (10000L * 52.37 ); // Amsterdam
     config.lon = (long) (10000L * 4.9 );
@@ -157,7 +157,9 @@ void setup()
     udp.endPacket();
 
     // wait to see if a reply is available
-    delay(1000);  
+    delay(1000); 
+    digitalWrite( GREEN_PIN, retry%2 ); 
+    
     int cb = udp.parsePacket();
     if (!cb) 
     {
@@ -230,7 +232,12 @@ void loop ( void )
     int minutesSinceMidnight = (now() % 86400) / 60;
     switchstate = ( minutesSinceMidnight > Sunrise &&  minutesSinceMidnight < Sunset )?0: 1;
   }
-  
+
+  if( switchstate )
+    digitalWrite( RELAY_PIN, 1 );
+  else
+    digitalWrite( RELAY_PIN, 0 );
+    
   if( TimeValid ) // Show State
   {
     if( config.switchmode == 1 ) // auto
